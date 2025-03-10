@@ -41,13 +41,21 @@ class Airfield{
     
 checkPos() {
     this.planes.forEach(plane => {
-    if(plane.xPos>this.width/2){
-        plane.xPos = -this.width/2;
-        plane.yPos = map(plane.yPos,-this.width,this.width,this.width,-this.width)
-    }else if(plane.xPos<-this.width/2){
-        plane.xPos = this.width/2;
-        plane.yPos = map(plane.yPos,this.width,)
-    }
-    })
+        if (plane.xPos > this.width / 2) {
+            plane.xPos = -this.width / 2;
+            plane.yPos = map(plane.yPos, -this.height / 2, this.height / 2, this.height / 2, -this.height / 2);
+        } else if (plane.xPos < -this.width / 2) {
+            plane.xPos = this.width / 2;
+            plane.yPos = map(plane.yPos, -this.height / 2, this.height / 2, this.height / 2, -this.height / 2);
+        }
 
-}}
+        if (plane.yPos > this.height / 2) {
+            plane.yPos = -this.height / 2;
+            plane.xPos = map(plane.xPos, -this.width / 2, this.width / 2, this.width / 2, -this.width / 2);
+        } else if (plane.yPos < -this.height / 2) {
+            plane.yPos = this.height / 2;
+            plane.xPos = map(plane.xPos, -this.width / 2, this.width / 2, this.width / 2, -this.width / 2);
+        }
+    })
+}
+}
