@@ -1,26 +1,26 @@
-
+const screenWidth = 500;
+const screenHeight = 500;
 let airFields=[]
 
 function setup(){
-createCanvas(500, 500);
+createCanvas(screenWidth, screenHeight);
 angleMode(DEGREES)
-rectMode(CENTER)
     
 
 
     airFields.push(new Airfield({
-       numPlanes: 5,
-       width: 150,
-       height: 150,
-       posX: 300,
-       posY: 300
+       numPlanes: 10,
+       width: 200,
+       height: 200,
+       posX: 20,
+       posY: 20
     }))
     airFields.push(new Airfield({
         numPlanes: 10,
-        width: 150,
-        height: 150,
-        posX: 100,
-        posY: 100
+        width: 200,
+        height: 200,
+        posX: 240,
+        posY: 20
      }))
     
     
@@ -28,10 +28,8 @@ rectMode(CENTER)
 
 function draw(){
     background(255,0,0)
-    for(i=0; i<airFields.length;i++){
-    airFields[i].renderAirfield()
-    airFields[i].renderPlanes()
-    airFields[i].movePlanes()
-    airFields[i].checkPos()
-    }
+    airFields.forEach((airfield)=>{
+        airfield.renderAirfield();
+        // airfield.movePlanes()
+    })
 }

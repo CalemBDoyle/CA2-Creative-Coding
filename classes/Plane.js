@@ -1,7 +1,7 @@
 class Plane{
     constructor(obj) {
-        this.xPos = obj.xPos || random(0,500);
-        this.yPos = obj.yPos || random(0,500);
+        this.xPos = obj.xPos || random(0,screenWidth);
+        this.yPos = obj.yPos || random(0,screenHeight);
         this.xVel = obj.xVel || random (-0.9,0.9);
         this.yVel = obj.yVel || random (-0.9,0.9);
         this.width = obj.width || 10;

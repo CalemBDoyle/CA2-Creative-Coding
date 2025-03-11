@@ -14,21 +14,23 @@ class Airfield{
         translate(this.posX,this.posY) 
         fill(0,255,0)
         rect(0,0,this.width,this.height)
-        pop()
-    }
-    renderPlanes(){
-        push()
-        translate(this.posX,this.posY) 
-        fill(0,0,255)
-        this.planes.forEach(plane=>plane.renderPlane())
+        this.planes.forEach(plane =>{
+            this.checkLimit(plane)
+            plane.renderPlane();
+            plane.movePlane()
+        })
         pop()
     }
 
     generatePlanes(){
         for(let i=0; i<this.numPlanes; i++){
             this.planes.push(new Plane({
-                xPos:random(-this.width/2,this.width/2),
-                yPos:random(-this.height/2,this.height/2)}))
+                xPos:random(0,this.width),
+                yPos:random(0,this.height),
+                xVel:random(-1,1),
+                yVel:random(-1,1)
+            
+            }))
             
         }
     }
@@ -38,24 +40,23 @@ class Airfield{
             
     }
 )}
-    
-checkPos() {
-    this.planes.forEach(plane => {
-        if (plane.xPos > this.width / 2) {
-            plane.xPos = -this.width / 2;
-            plane.yPos = map(plane.yPos, -this.height / 2, this.height / 2, this.height / 2, -this.height / 2);
-        } else if (plane.xPos < -this.width / 2) {
-            plane.xPos = this.width / 2;
-            plane.yPos = map(plane.yPos, -this.height / 2, this.height / 2, this.height / 2, -this.height / 2);
-        }
 
-        if (plane.yPos > this.height / 2) {
-            plane.yPos = -this.height / 2;
-            plane.xPos = map(plane.xPos, -this.width / 2, this.width / 2, this.width / 2, -this.width / 2);
-        } else if (plane.yPos < -this.height / 2) {
-            plane.yPos = this.height / 2;
-            plane.xPos = map(plane.xPos, -this.width / 2, this.width / 2, this.width / 2, -this.width / 2);
-        }
-    })
+checkLimit(plane){
+  if (plane.xPos>this.width){
+    plane.xPos=0
+    plane.yPos= map(plane.yPos,0, this.height, this.height,0)
+  }  else if (plane.xPos <0){
+    plane.xPos = this.width
+    plane.yPos = map(plane.yPos,0,this.height, this.height,0)
+  }
+
+  if (plane.yPos>this.height){
+    plane.yPos=0
+    plane.xPos= map(plane.xPos,0, this.width, this.width,0)
+  }  else if (plane.yPos <0){
+    plane.yPos = this.height
+    plane.xPos = map(plane.xPos,0,this.width, this.width,0)
+  }
+
 }
 }
