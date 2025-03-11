@@ -7,13 +7,15 @@ class Airfield{
         this.posY = obj.posY ?? 250
         this.planes = []
         this.generatePlanes()
+
     }
 
     renderAirfield(){
         push()
         translate(this.posX,this.posY) 
-        fill(0,255,0)
+        fill(0,0,255)
         rect(0,0,this.width,this.height)
+        fill(0,255,0)
         this.planes.forEach(plane =>{
             this.checkLimit(plane)
             plane.renderPlane();
@@ -58,5 +60,24 @@ checkLimit(plane){
     plane.xPos = map(plane.xPos,0,this.width, this.width,0)
   }
 
+}
+
+checkDist(){
+
+  this.planes.forEach(plane => plane.alert=0)
+  let count= 0
+  for (let i=0; i<this.planes.length; i++){
+   for(let j=i+1; j<this.planes.length; j++){
+      let planeA = this.planes[i];
+      let planeB = this.planes[j];
+      let dist = sqrt(((sq(planeA.xPos - planeB.xPos)) + (sq(planeA.yPos - planeB.yPos))));
+      if (dist<20){
+        planeA.alert=true;
+        planeB.alert=true;
+      }
+
+    
+    }
+  }
 }
 }

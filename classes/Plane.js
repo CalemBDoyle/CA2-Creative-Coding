@@ -7,7 +7,8 @@ class Plane{
         this.width = obj.width || 10;
         this.height =  obj.height || 30;
         this.tail = obj.tail || 4;
-    }
+        this.alert=false
+}
 
     renderPlane() {
         push()
@@ -22,6 +23,12 @@ class Plane{
             vertex(this.height, 0)
             vertex(-this.tail, this.width)
         endShape()
+        if(this.alert){
+        noFill()
+        stroke(0,0,0)
+        strokeWeight(2)
+        ellipse(this.height*0.4,0,this.height*1.4)
+        }
         pop()
     }
     

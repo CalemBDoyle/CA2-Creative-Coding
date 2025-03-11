@@ -30,6 +30,7 @@ function draw(){
     background(255,0,0)
     airFields.forEach((airfield)=>{
         airfield.renderAirfield();
+        airfield.checkDist()
         // airfield.movePlanes()
     })
 }
