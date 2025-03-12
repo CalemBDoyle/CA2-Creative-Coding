@@ -1,6 +1,6 @@
 class Airfield{
     constructor(obj){
-        this.numPlanes = obj.numPlanes ?? 50;
+        this.numPlanes = obj.numPlanes ?? 1;
         this.width = obj.width ?? 300;
         this.height = obj.height ?? 300;
         this.posX = obj.posX ?? 250
@@ -16,9 +16,9 @@ class Airfield{
         fill(0,0,255)
         rect(0,0,this.width,this.height)
         fill(0,255,0)
-        this.planes.forEach(plane =>{
+        this.planes.forEach((plane,id) =>{
             this.checkLimit(plane)
-            plane.renderPlane();
+            plane.renderPlane(id);
             plane.movePlane()
         })
         pop()
@@ -65,7 +65,6 @@ checkLimit(plane){
 checkDist(){
 
   this.planes.forEach(plane => plane.alert=0)
-  let count= 0
   for (let i=0; i<this.planes.length; i++){
    for(let j=i+1; j<this.planes.length; j++){
       let planeA = this.planes[i];
@@ -74,6 +73,7 @@ checkDist(){
       if (dist<20){
         planeA.alert=true;
         planeB.alert=true;
+
       }
 
     

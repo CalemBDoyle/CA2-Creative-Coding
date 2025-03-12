@@ -2,21 +2,23 @@ class Plane{
     constructor(obj) {
         this.xPos = obj.xPos || random(0,screenWidth);
         this.yPos = obj.yPos || random(0,screenHeight);
-        this.xVel = obj.xVel || random (-0.9,0.9);
-        this.yVel = obj.yVel || random (-0.9,0.9);
+        
         this.width = obj.width || 10;
-        this.height =  obj.height || 30;
+        this.height =  obj.height || 20;
         this.tail = obj.tail || 4;
         this.alert=false
+        this.speed=random(1,5);
+        this.angle=random(0,360)
+        this.xVel = this.speed*cos(this.angle)
+        this.yVel = this.speed*sin(this.angle)
 }
 
-    renderPlane() {
+    renderPlane(id) {
         push()
         translate(this.xPos,this.yPos)
-        let angle = atan2 (this.yVel, this.xVel)
         strokeWeight(1)
-        
-        rotate(angle)
+        text(id,10,-10)
+        rotate(this.angle)
         beginShape()
             vertex(0,0)
             vertex(-this.tail, -this.width)
