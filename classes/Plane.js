@@ -40,4 +40,30 @@ class Plane{
         this.xPos = this.xPos + this.xVel
         this.yPos = this.yPos + this.yVel
     }
+    updateVel() {
+        this.xVel = this.speed * cos(this.angle);
+        this.yVel = this.speed * sin(this.angle);
+    }
+    increaseSpeed() {
+        this.speed += 0.3;
+        this.updateVel();
+    }
+ 
+    decreaseSpeed() {
+        this.speed -= 0.3;
+        if (this.speed < 0) {
+            this.speed = 0.1
+        }
+        this.updateVel();
+    }
+ 
+    turnLeft() {
+        this.angle -= 2;
+        this.updateVel();
+    }
+ 
+    turnRight() {
+        this.angle += 2;
+        this.updateVel();
+    }
 }

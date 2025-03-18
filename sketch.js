@@ -1,7 +1,7 @@
 const screenWidth = 500;
 const screenHeight = 500;
 let airFields=[]
-let currentplane
+let currentplane =0 
 
 function setup(){
 createCanvas(screenWidth, screenHeight);
@@ -34,8 +34,13 @@ function draw(){
         airfield.checkDist()
         // airfield.movePlanes()
     })
+    if (keyIsDown(LEFT_ARROW) === true) {
+        airFields[0].planes[currentplane].turnLeft()
+    }
+    if (keyIsDown(RIGHT_ARROW) === true) {
+        airFields[0].planes[currentplane].turnRight()
+    }
 }
-
 function keyPressed(){
     switch(key){
         case "0": currentplane=0; break;
@@ -50,11 +55,6 @@ function keyPressed(){
         case "9": currentplane=9; break;
 
     }
-    airFields[0].planes[currentplane].angle+=10
-    // if (key >= '0' && key <= '9') {
-    //     currentPlane = key
-    // }
-    // console.log(currentPlane)
 
 
 }
