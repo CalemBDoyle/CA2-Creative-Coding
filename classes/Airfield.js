@@ -1,12 +1,12 @@
 class Airfield{
     constructor(obj){
-        this.numPlanes = obj.numPlanes ?? 1;
+        this.numCrafts = obj.numCrafts ?? 3;
         this.width = obj.width ?? 300;
         this.height = obj.height ?? 300;
         this.posX = obj.posX ?? 250
         this.posY = obj.posY ?? 250
-        this.planes = []
-        this.generatePlanes()
+        this.crafts = []
+        this.generateCrafts()
 
     }
 
@@ -16,63 +16,69 @@ class Airfield{
         fill(0,0,255)
         rect(0,0,this.width,this.height)
         fill(0,255,0)
-        this.planes.forEach((plane,id) =>{
-            this.checkLimit(plane)
-            plane.renderPlane(id);
-            plane.movePlane()
+        this.crafts.forEach((craft,id) =>{
+            this.checkLimit(craft)
+            craft.render(id);
+            craft.move()
         })
         pop()
     }
 
-    generatePlanes(){
-        for(let i=0; i<this.numPlanes; i++){
-            this.planes.push(new Plane({
-                xPos:random(0,this.width),
-                yPos:random(0,this.height),
+    generateCrafts(){
+        for(let i=0; i<this.numCrafts; i++){
+          let num= random(0,1);
+          if(num<0.5){
+            this.crafts.push(new Craft({
+              xVel:random(-1,1),
+              yVel:random(-1,1)
+            }))
+          } else{
+            this.crafts.push(new Plane({
+              
                 xVel:random(-1,1),
                 yVel:random(-1,1)
             
-            }))
+            }))}
             
         }
     }
-    movePlanes(){
-        this.planes.forEach(plane => {
-            plane.movePlane()
+    moveCrafts(){
+        this.crafts.forEach(craft => {
+            craft.move()
             
     }
 )}
 
-checkLimit(plane){
-  if (plane.xPos>this.width){
-    plane.xPos=0
-    plane.yPos= map(plane.yPos,0, this.height, this.height,0)
-  }  else if (plane.xPos <0){
-    plane.xPos = this.width
-    plane.yPos = map(plane.yPos,0,this.height, this.height,0)
+checkLimit(craft){
+  if (craft.pos.x>this.width){
+    craft.pos.x=0
+    craft.pos.y= map(craft.pos.y,0, this.height, this.height,0)
+  }  else if (craft.pos.x <0){
+    craft.pos.x = this.width
+    craft.pos.y = map(craft.pos.y,0,this.height, this.height,0)
   }
 
-  if (plane.yPos>this.height){
-    plane.yPos=0
-    plane.xPos= map(plane.xPos,0, this.width, this.width,0)
-  }  else if (plane.yPos <0){
-    plane.yPos = this.height
-    plane.xPos = map(plane.xPos,0,this.width, this.width,0)
+  if (craft.pos.y>this.height){
+    craft.pos.y=0
+    craft.pos.x= map(craft.pos.x,0, this.width, this.width,0)
+  }  else if (craft.pos.y <0){
+    craft.pos.y = this.height
+    craft.pos.x = map(craft.pos.x,0,this.width, this.width,0)
   }
 
 }
 
 checkDist(){
 
-  this.planes.forEach(plane => plane.alert=0)
-  for (let i=0; i<this.planes.length; i++){
-   for(let j=i+1; j<this.planes.length; j++){
-      let planeA = this.planes[i];
-      let planeB = this.planes[j];
-      let dist = sqrt(((sq(planeA.xPos - planeB.xPos)) + (sq(planeA.yPos - planeB.yPos))));
+  this.crafts.forEach(craft => craft.alert=0)
+  for (let i=0; i<this.crafts.length; i++){
+   for(let j=i+1; j<this.crafts.length; j++){
+      let craftA = this.crafts[i];
+      let craftB = this.crafts[j];
+      let dist = sqrt(((sq(craftA.pos.x - craftB.pos.x)) + (sq(craftA.pos.y - craftB.pos.y))));
       if (dist<20){
-        planeA.alert=true;
-        planeB.alert=true;
+        craftA.alert=true;
+        craftB.alert=true;
 
       }
 
