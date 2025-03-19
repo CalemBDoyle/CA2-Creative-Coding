@@ -6,13 +6,14 @@ let currentCraft =0
 function setup(){
 createCanvas(screenWidth, screenHeight);
 angleMode(DEGREES)
+
     
 
 
     airFields.push(new Airfield({
-       numcrafts: 1,
-       width: 200,
-       height: 200,
+       numCrafts: 10,
+       width: 300,
+       height: 300,
        posX: 20,
        posY: 20
     }))
@@ -53,7 +54,7 @@ function keyPressed(){
         case "7": currentCraft=7; break;
         case "8": currentCraft=8; break;
         case "9": currentCraft=9; break;
-
+        
     }
 
 

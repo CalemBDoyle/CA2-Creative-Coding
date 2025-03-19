@@ -28,7 +28,7 @@ class Airfield{
         for(let i=0; i<this.numCrafts; i++){
           let num= random(0,1);
           if(num<0.5){
-            this.crafts.push(new Craft({
+            this.crafts.push(new Heli({
               xVel:random(-1,1),
               yVel:random(-1,1)
             }))
