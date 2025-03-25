@@ -1,7 +1,7 @@
 let entities=[]
 let numEntities=1
-let screenWidth=1000
-let screenHeight=1000
+const screenWidth=500
+const screenHeight=500
 
 function setup() {
   createCanvas(1000, 1000);
@@ -19,14 +19,12 @@ function setup() {
 }
 
 function draw() {
-  if (entities.length > 0) {
-    // Loop through each entity in the 'entities' array
-    for (let i = 0; i < entities.length; i++) {
-      if (entities[i].speed < 0) {
-        entities[i].speed = 0; // Set the speed of that entity to 0
-      }
-    }
-  }
+  entities.forEach((entity)=>{
+    
+    entity.checkColl()
+    // airfield.movecrafts()
+})
+  
   background(220);
   entities[0].render()
   if(keyIsDown(87)){

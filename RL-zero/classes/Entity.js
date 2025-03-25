@@ -1,7 +1,7 @@
 class Entity{
     constructor(obj){
     this.width = 20
-    this.height = 10
+    this.height = 20
     this.pos = createVector(obj.screenWidth/2, obj.screenHeight/2)
     this.speed=0;
     this.angle=random(0,360)
@@ -19,7 +19,7 @@ class Entity{
         ellipse (0,0,this.width,this.height)
         pop()
         text("this is the speed " + this.speed, 50,50);
-        text("this is the velocity increasing: " + this.vel.x + ", " + this.vel.y,50,75);
+        text("this is the velocity changing: " + this.vel.x + ", " + this.vel.y,50,75);
     }
     updateVel() {
         this.vel.x = this.speed * cos(this.angle);
@@ -27,8 +27,8 @@ class Entity{
     }
     move(){
         
-        if (this.speed < 50 && frameCount % 10 === 0) {
-            this.speed += 5;
+        if (this.pos.x>0 && this.speed < 50 && frameCount % 10 === 0) {
+            this.speed += 1;
         
             // Update velocity based on the new speed (no scaling by 10)
             this.updateVel()
@@ -40,26 +40,20 @@ class Entity{
         this.pos.y = this.pos.y + this.vel.y
     }
     turnLeft() {
-        if (frameCount % 2.5 === 0) {
-    
-          this.speed += -2;
-      
-          
-          let turnAmount = Math.min(this.speed / 5, 50); 
-          this.angle -= turnAmount;
-          this.updateVel();
-        }
-      }
- 
-    turnRight() {
-        if (frameCount % 2.5 === 0) {
-    
-            this.speed += -2;
-        
-            
-            let turnAmount = Math.min(this.speed / 5, 50); 
-            this.angle += turnAmount;
-            this.updateVel();
-          }
-        }
+      this.angle -= 2;
+      this.updateVel();
+  }
+
+  turnRight() {
+      this.angle += 2;
+      this.updateVel();
+  }
+  checkColl(){
+    if (this.pos.x <= 0 || this.pos.x >= width) {
+      this.vel.x = -this.vel.x;  // Reverse the horizontal velocity when hitting left or right wall
+    }
+    if (this.pos.y <= 0 || this.pos.y >= height) {
+      this.vel.y = -this.vel.y;  // Reverse the vertical velocity when hitting top or bottom wall
+    }
+  }
 }
