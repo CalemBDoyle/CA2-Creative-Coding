@@ -1,10 +1,10 @@
 let entities=[]
 let numEntities=1
-const screenWidth=500
-const screenHeight=500
+const screenWidth=1000
+const screenHeight=1000
 
 function setup() {
-  createCanvas(1000, 1000);
+  createCanvas(screenWidth,screenHeight);
   angleMode(DEGREES)
 // Assuming 'entities' is an array of objects, each having a 'speed' property
 
@@ -22,6 +22,7 @@ function draw() {
   entities.forEach((entity)=>{
     
     entity.checkColl()
+    entity.decelerate()
     // airfield.movecrafts()
 })
   
