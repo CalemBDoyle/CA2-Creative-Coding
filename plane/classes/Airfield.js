@@ -7,6 +7,7 @@ class Airfield{
         this.posY = obj.posY ?? 250
         this.crafts = []
         this.generateCrafts()
+        
 
     }
 
@@ -16,7 +17,7 @@ class Airfield{
         fill(0,0,255)
         rect(0,0,this.width,this.height)
         fill(0,255,0)
-        this.crafts.forEach((craft,id) =>{
+        this.crafts.forEach((craft) =>{
             this.checkLimit(craft)
             craft.render(id);
             craft.move()

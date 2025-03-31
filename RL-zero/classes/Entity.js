@@ -4,7 +4,7 @@ class Entity{
     this.height = 30
     this.pos = createVector(obj.screenWidth/2, obj.screenHeight/2)
     this.speed=0;
-    this.angle=random(0,360)
+    this.angle=0
     this.vel = createVector(
     this.speed*cos(this.angle),
     this.speed*sin(this.angle),
@@ -63,41 +63,19 @@ class Entity{
     }
 }
 checkColl() {
-  let vertices = [
-      createVector(this.x, this.y), // Center of the object
-      createVector(this.x - this.tail, this.y - this.width),
-      createVector(this.x + this.height, this.y),
-      createVector(this.x - this.tail, this.y + this.width)
-  ];
 
-  // Get the leftmost and rightmost x-coordinates of the vertices
-  let leftmost = Math.min(...vertices.map(v => v.x));  // Get the leftmost x-coordinate
-  let rightmost = Math.max(...vertices.map(v => v.x)); // Get the rightmost x-coordinate
-
-  // Check for collision with the left or right edges of the screen
-  if (leftmost <= 0 || rightmost >= screenWidth) {
+//  Check if the entity collides with the left or right walls
+    if (this.pos.x - this.width / 2 <= 0 || this.pos.x + this.width / 2 >= screenWidth) {
       this.vel.x = -this.vel.x;  // Reverse the horizontal velocity
-
       // Correct the position to prevent the entity from being stuck in the wall
-      let width = rightmost - leftmost;
-      this.x = constrain(this.x, width / 2, screenWidth - width / 2); // Adjust the center position
+      this.pos.x = constrain(this.pos.x, this.width / 2, screenWidth - this.width / 2);
+    }
 
-      // Optionally, update each vertex based on the new center
-      vertices.forEach(v => {
-          v.x = this.x + (v.x - this.x); // Update each vertex position relative to the new center
-      });
+    // Check if the entity collides with the top or bottom walls
+    if (this.pos.y - this.height / 2 <= 0 || this.pos.y + this.height / 2 >= screenHeight) {
+      this.vel.y = -this.vel.y;  // Reverse the vertical velocity
+      // Correct the position to prevent the entity from being stuck in the wall
+      this.pos.y = constrain(this.pos.y, this.height / 2, screenHeight - this.height / 2);
   }
-}}
- // Check if the entity collides with the left or right walls
-  //   if (this.pos.x - this.width / 2 <= 0 || this.pos.x + this.width / 2 >= screenWidth) {
-  //     this.vel.x = -this.vel.x;  // Reverse the horizontal velocity
-  //     // Correct the position to prevent the entity from being stuck in the wall
-  //     this.pos.x = constrain(this.pos.x, this.width / 2, screenWidth - this.width / 2);
-  //   }
-
-  //   // Check if the entity collides with the top or bottom walls
-  //   if (this.pos.y - this.height / 2 <= 0 || this.pos.y + this.height / 2 >= screenHeight) {
-  //     this.vel.y = -this.vel.y;  // Reverse the vertical velocity
-  //     // Correct the position to prevent the entity from being stuck in the wall
-  //     this.pos.y = constrain(this.pos.y, this.height / 2, screenHeight - this.height / 2);
-  // }
+}
+}
