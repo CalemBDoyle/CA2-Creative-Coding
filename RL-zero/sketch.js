@@ -21,18 +21,12 @@ function setup() {
 
 function draw() {
   background(220);
- tracks.forEach((track)=>{
+  tracks.forEach((track)=>{
     
-  track.generateTrack()
-  track.movement()
-  // airfield.movecrafts()
+    track.generateTrack()
+    track.movement()
+    // airfield.movecrafts()
 })
-  if(keyIsDown(87)){
-  entities[playerCraft].move()
-  } if (keyIsDown(65)){
-      entities[playerCraft].turnLeft()
-  } if (keyIsDown(68)){
-      entities[playerCraft].turnRight()
-  } 
+  
 
 }

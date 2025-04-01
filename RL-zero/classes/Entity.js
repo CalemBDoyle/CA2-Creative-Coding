@@ -1,5 +1,7 @@
 class Entity{
     constructor(obj){
+    this.screenWidth = obj.screenWidth
+    this.screenHeight = obj.screenHeight
     this.width = 15
     this.height = 30
     this.pos = createVector(obj.screenWidth/2, obj.screenHeight/2)
@@ -9,7 +11,8 @@ class Entity{
     this.speed*cos(this.angle),
     this.speed*sin(this.angle),
     this.deceleration = 0.25,
-    this.tail = 4
+    this.tail = 4,
+    this.track = obj.track
     )
     }
     
@@ -65,17 +68,13 @@ class Entity{
 checkColl() {
 
 //  Check if the entity collides with the left or right walls
-    if (this.pos.x - this.width / 2 <= 0 || this.pos.x + this.width / 2 >= screenWidth) {
-      this.vel.x = -this.vel.x;  // Reverse the horizontal velocity
-      // Correct the position to prevent the entity from being stuck in the wall
-      this.pos.x = constrain(this.pos.x, this.width / 2, screenWidth - this.width / 2);
+    if (this.pos.x - this.width / 2 > this.screenWidth) {
+        this.pos.x = 0
     }
 
     // Check if the entity collides with the top or bottom walls
-    if (this.pos.y - this.height / 2 <= 0 || this.pos.y + this.height / 2 >= screenHeight) {
-      this.vel.y = -this.vel.y;  // Reverse the vertical velocity
-      // Correct the position to prevent the entity from being stuck in the wall
-      this.pos.y = constrain(this.pos.y, this.height / 2, screenHeight - this.height / 2);
-  }
+    if (this.pos.y - this.height / 2 <= 0 || this.pos.y + this.height / 2 >= this.screenHeight) {
+      this.pos.y = constrain(this.pos.y, this.height / 2, this.screenHeight - this.height / 2);
+    }
 }
 }
