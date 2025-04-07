@@ -1,11 +1,9 @@
 class Entity{
     constructor(obj){
-    this.screenWidth = obj.screenWidth
-    this.screenHeight = obj.screenHeight
     this.width = 15
     this.height = 30
-    this.pos = createVector(obj.screenWidth/2, obj.screenHeight/2)
-    this.speed=0;
+    this.pos = createVector(obj.xPos, obj.yPos)
+    this.speed=obj.speed || 0;
     this.angle=0
     this.vel = createVector(
     this.speed*cos(this.angle),
@@ -37,7 +35,7 @@ class Entity{
     }
     move(){
         
-        if (this.pos.x>=0 && this.speed < 50 && frameCount % 10 === 0) {
+        if (this.pos.x>=0 && this.speed < 25 && frameCount % 10 === 0) {
             this.speed += 5;
         
             // Update velocity based on the new speed (no scaling by 10)
@@ -64,17 +62,4 @@ class Entity{
         this.speed = max(0, this.speed - this.deceleration); // Slow down, but don't go below 0
         this.updateVel(); // Update velocity based on new speed
     }
-}
-checkColl() {
-
-//  Check if the entity collides with the left or right walls
-    if (this.pos.x - this.width / 2 > this.screenWidth) {
-        this.pos.x = 0
-    }
-
-    // Check if the entity collides with the top or bottom walls
-    if (this.pos.y - this.height / 2 <= 0 || this.pos.y + this.height / 2 >= this.screenHeight) {
-      this.pos.y = constrain(this.pos.y, this.height / 2, this.screenHeight - this.height / 2);
-    }
-}
-}
+}}
