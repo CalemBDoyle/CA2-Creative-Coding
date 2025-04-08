@@ -5,8 +5,9 @@ class Airfield {
         this.posX = obj.posX ?? 0;
         this.posY = obj.posY ?? 1000;
         this.corner = obj.corner ?? 75;
-        this.numDucks = obj.numDucks ?? 2;
+        this.numDucks = obj.numDucks ?? 0;
         this.numPucks = obj.numPucks ?? 0;
+        this.numSucks = obj.numSucks ?? 0;
         this.numTargets = this.numDucks + this.numPucks;
         this.ducks = []; // Initialize ducks array
         this.generateDucks();
@@ -25,10 +26,13 @@ class Airfield {
             duck.render();
             duck.move();
             this.bounceDuck(duck);
+            if (duck instanceof Suck) {
+            duck.update()
+            }
     
             // Check if it touches the top (fly off and delete)
             if (duck.pos.y - duck.height / 2 <= 0) {
-                this.ducks.splice(i, 1);
+                this.ducks.splice(i, 1);    
             }
         }
     
@@ -55,9 +59,17 @@ class Airfield {
             });
             this.ducks.push(puck);
         }
+        for (let i = 0; i < this.numSucks; i++) {
+            const puck = new Suck({
+                xPos: random(0, this.width),
+                yPos: this.height,
+                speed: random(1, 3),
+            });
+            this.ducks.push(puck);
+        }
 
         // Debug log to check if ducks and pucks are added correctly
-        console.log('Ducks and Pucks:', this.ducks);
+        console.log('Ducks and Pucks and Sucks:', this.ducks);
     }
 
     bounceDuck(duck) {
@@ -71,6 +83,17 @@ class Airfield {
             duck.vel.y *= -1; // Reverse y velocity
         }
     }
+    checkCollision(duck1, duck2) {
+        let dx = duck1.pos.x - duck2.pos.x;
+        let dy = duck1.pos.y - duck2.pos.y;
+        let distance = Math.sqrt(dx * dx + dy * dy);
+        console.log("collisionDetected")
+
+        // If distance between the centers is less than the sum of their radii, they are colliding
+        return distance < (duck1.width / 2 + duck2.width / 2);
+        
+    }
+
 
     isCleared() {
         // Return true if no ducks or pucks are left
