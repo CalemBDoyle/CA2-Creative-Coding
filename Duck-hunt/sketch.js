@@ -4,9 +4,8 @@ const screenWidth = 1000;
 const screenHeight = 1000;
 let duckImage;
 let duckImage2;
-let currentAirfieldIndex = 0; // To track which airfield is active
-let gameState = "playing";
-let gameFinished = false; // Flag to check if the game is finished
+let currentAirfieldIndex = 0;
+let gameFinished = false; 
 let menu;
 
 function preload() {
@@ -22,7 +21,7 @@ function setup() {
   angleMode(DEGREES);
 
   
-
+  //rendering airfields in array
   airFields.push(new Airfield({
     width: screenWidth,
     height: screenHeight * 0.75,
@@ -75,15 +74,15 @@ function setup() {
     airFields: airFields
   }));
   menu = new Menu({score: scoreboard.score});
-  // Initialize the menu
+  
   
 }
 
 function draw() {
   background(0, 75, 0);
   if (gameFinished) {
-    
-    menu.render(); // Render the menu with the play again button
+  menu.score = scoreboard[0].score; // update menu score before rendering
+  menu.render();
   } else {
     // get the current active airfield
     let currentAirfield = airFields[currentAirfieldIndex];
@@ -100,9 +99,8 @@ function draw() {
 
 function mousePressed() {
   if (gameFinished) {
-    // If the game is finished, check if the play again button is clicked
     if (menu.isClicked(mouseX, mouseY)) {
-      resetGame();  // Reset the game
+      resetGame();  // reset the game function
     }
   } else {
     let currentAirfield = airFields[currentAirfieldIndex];
@@ -113,18 +111,18 @@ function mousePressed() {
         if (duck instanceof Suck) {
           duck.registerHit();
           if (duck.dead()){
-            currentAirfield.ducks.splice(i, 1); // Only remove if dead
-            scoreboard[0].increaseScore(500); // Add points for hitting a puck
+            currentAirfield.ducks.splice(i, 1); // only remove if dead
+            scoreboard[0].increaseScore(500); // add points 
           }
         }else if (duck instanceof Puck) {
           duck.registerHit();
           if (duck.dead()) {
-            currentAirfield.ducks.splice(i, 1); // Only remove if dead
-            scoreboard[0].increaseScore(250); // Add points for hitting a puck
+            currentAirfield.ducks.splice(i, 1); 
+            scoreboard[0].increaseScore(250); 
           }
         } else {
-          currentAirfield.ducks.splice(i, 1); // Normal duck, remove immediately
-          scoreboard[0].increaseScore(100); // Add points for hitting a duck
+          currentAirfield.ducks.splice(i, 1); 
+          scoreboard[0].increaseScore(100); 
         }
         break; // Only one click at a time
       }
@@ -196,14 +194,14 @@ function resetGame() {
     numPucks: 4,
     numSucks: 2
   }));
-  scoreboard = []; // Reset scoreboard
+  scoreboard = []; // reset scoreboard
   scoreboard.push(new Scoreboard({
     airFields: airFields
   }));
 
-  menu = new Menu(); // Recreate the menu
-  gameFinished = false; // Reset gameFinished flag
-  currentAirfieldIndex = 0; // Reset airfield index
+  menu = new Menu({ score: 0 }); // recreate the menu
+  gameFinished = false; // reset gameFinished state
+  currentAirfieldIndex = 0; // reset airfield index
 
-  loop(); // Restart the game loop
+  loop(); // restart the game
 }

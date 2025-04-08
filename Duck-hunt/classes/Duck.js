@@ -18,10 +18,10 @@ class Duck{
         push()
         translate(this.pos.x,this.pos.y)
         if (this.vel.x < 0) {
-            scale(-1, 1); // Flip horizontally
+            scale(-1, 1); // flip horizontally
         }
        
-        imageMode(CENTER); // Make sure the image is drawn centered around its position
+        imageMode(CENTER); // make sure the image is drawn centered around its position
         image(duckImage, 0, 0, this.width, this.height);
         pop()
     
@@ -33,7 +33,7 @@ class Duck{
         } else {
             this.clickTimer -= deltaTime;
             if (this.clickTimer <= 0) {
-                this.clicked = false; // Resume moving after 1 sec
+                this.clicked = false; // resume moving after 1 sec
             }
         }
     }
@@ -46,7 +46,7 @@ class Duck{
             
             
             this.clicked = true;
-            this.clickTimer = 1000; // 1000 ms = 1 second
+            this.clickTimer = 1000; 
             return true;
         }
         return false;

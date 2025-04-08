@@ -10,13 +10,13 @@ class Suck extends Duck{
         push();
         translate(this.pos.x, this.pos.y);
         if (this.vel.x < 0) {
-            scale(-1, 1); // Flip horizontally
+            scale(-1, 1); 
         }
         imageMode(CENTER);
         if (this.clicked) {
-            image(suckHitImage, 0, 0, this.width, this.height); // Different image when clicked
+            image(suckHitImage, 0, 0, this.width, this.height); 
         } else {
-            image(suckImage, 0, 0, this.width, this.height); // Normal flying duck
+            image(suckImage, 0, 0, this.width, this.height); 
         }
         pop();
         
@@ -49,7 +49,7 @@ update() {
 } else {
     this.clickTimer -= deltaTime;
     if (this.clickTimer <= 0) {
-        this.clicked = false; // Resume moving after 1 sec
+        this.clicked = false; 
     }
 }
     

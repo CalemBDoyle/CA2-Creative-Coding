@@ -9,7 +9,7 @@ class Airfield {
         this.numPucks = obj.numPucks ?? 0;
         this.numSucks = obj.numSucks ?? 0;
         this.numTargets = this.numDucks + this.numPucks;
-        this.ducks = []; // Initialize ducks array
+        this.ducks = []; // initialize ducks array
         this.generateDucks();
     }
 
@@ -20,7 +20,7 @@ class Airfield {
         rect(0, 0, this.width, this.height);
         fill(0, 0, 255);
         
-        // Loop BACKWARDS through ducks (so we can remove safely)
+        // loop BACKWARDS through ducks (so we can remove safely)
         for (let i = this.ducks.length - 1; i >= 0; i--) {
             let duck = this.ducks[i];
             duck.render();
@@ -30,7 +30,7 @@ class Airfield {
                 duck.update();
             }
     
-            // Check if it touches the top (fly off and delete)
+            // check if it touches the top (delete)
             if (duck.pos.y - duck.height / 2 <= 0) {
                 this.ducks.splice(i, 1);    
             }
@@ -40,7 +40,7 @@ class Airfield {
     }
 
     generateDucks() {
-        // Generate Ducks
+        // generate Ducks
         for (let i = 0; i < this.numDucks; i++) {
             const duck = new Duck({
                 xPos: random(0, this.width),
@@ -50,7 +50,7 @@ class Airfield {
             this.ducks.push(duck);
         }
         
-        // Generate Pucks
+        // generate Pucks
         for (let i = 0; i < this.numPucks; i++) {
             const puck = new Puck({
                 xPos: random(0, this.width),
@@ -60,7 +60,7 @@ class Airfield {
             this.ducks.push(puck);
         }
         
-        // Generate Sucks
+        // generate Sucks
         for (let i = 0; i < this.numSucks; i++) {
             const suck = new Suck({
                 xPos: random(0, this.width),
@@ -70,7 +70,7 @@ class Airfield {
             this.ducks.push(suck);
         }
 
-        // Debug log to check if ducks and pucks are added correctly
+        // Debugging
         console.log('Ducks, Pucks, and Sucks:', this.ducks);
     }
 
@@ -129,7 +129,7 @@ class Airfield {
     
 
     isCleared() {
-        // Return true if no ducks or pucks are left
+        // return true if no ducks or pucks are left
         return this.ducks.length === 0;
     }
 }
