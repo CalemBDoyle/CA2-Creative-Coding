@@ -59,7 +59,7 @@ function setup() {
     posX: 0,
     posY: 0,
     numDucks: 0,
-    numPucks: 5, 
+    numPucks: 5,
     numSucks: 2
   }));
   airFields.push(new Airfield({
@@ -72,17 +72,17 @@ function setup() {
     numSucks: 2
   }));
   scoreboard.push(new Scoreboard({
-    numAirfields: airFields.length
+    airFields: airFields
   }));
-
+  menu = new Menu({score: scoreboard.score});
   // Initialize the menu
-  menu = new Menu();
+  
 }
 
 function draw() {
   background(0, 75, 0);
   if (gameFinished) {
-
+    
     menu.render(); // Render the menu with the play again button
   } else {
     // get the current active airfield
@@ -143,6 +143,7 @@ function nextLevel() {
   } else {
     console.log("Next Level!");
   }
+  scoreboard[0].passAirfield();
 }
 
 function resetGame() {
@@ -197,7 +198,7 @@ function resetGame() {
   }));
   scoreboard = []; // Reset scoreboard
   scoreboard.push(new Scoreboard({
-    numAirfields: airFields.length
+    airFields: airFields
   }));
 
   menu = new Menu(); // Recreate the menu
