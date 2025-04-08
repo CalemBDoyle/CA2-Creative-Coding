@@ -27,7 +27,7 @@ class Airfield {
             duck.move();
             this.bounceDuck(duck);
             if (duck instanceof Suck) {
-            duck.update()
+                duck.update();
             }
     
             // Check if it touches the top (fly off and delete)
@@ -59,17 +59,19 @@ class Airfield {
             });
             this.ducks.push(puck);
         }
+        
+        // Generate Sucks
         for (let i = 0; i < this.numSucks; i++) {
-            const puck = new Suck({
+            const suck = new Suck({
                 xPos: random(0, this.width),
                 yPos: this.height,
                 speed: random(1, 3),
             });
-            this.ducks.push(puck);
+            this.ducks.push(suck);
         }
 
         // Debug log to check if ducks and pucks are added correctly
-        console.log('Ducks and Pucks and Sucks:', this.ducks);
+        console.log('Ducks, Pucks, and Sucks:', this.ducks);
     }
 
     bounceDuck(duck) {
@@ -77,12 +79,54 @@ class Airfield {
         if (duck.pos.x - duck.width / 2 < 0 || duck.pos.x + duck.width / 2 > this.width) {
             duck.vel.x *= -1; // Reverse x velocity
         }
-
-        // bottom walls
+    
+        // bottom walls (ground)
         if (duck.pos.y + duck.height / 2 > this.height) {
             duck.vel.y *= -1; // Reverse y velocity
+            duck.pos.y = this.height - duck.height / 2; // Prevent going below the ground
+        }
+        this.checkDuckCollisions()
+    }
+    checkDuckCollisions() {
+        for (let i = 0; i < this.ducks.length; i++) {
+            let duck1 = this.ducks[i];
+            for (let j = i + 1; j < this.ducks.length; j++) {
+                let duck2 = this.ducks[j];
+    
+                // Calculate the distance between ducks
+                let dx = duck2.pos.x - duck1.pos.x;
+                let dy = duck2.pos.y - duck1.pos.y;
+                let distance = sqrt(dx * dx + dy * dy);
+    
+                // If ducks are colliding (overlapping)
+                if (distance < (duck1.width / 2 + duck2.width / 2)) {
+                    // Resolve collision by separating them and changing their velocities
+                    let angle = atan2(dy, dx);
+                    let overlap = (duck1.width / 2 + duck2.width / 2) - distance;
+    
+                    // Push ducks away from each other
+                    let pushX = cos(angle) * overlap / 2;
+                    let pushY = sin(angle) * overlap / 2;
+    
+                    // Adjust their positions
+                    duck1.pos.x -= pushX;
+                    duck1.pos.y -= pushY;
+                    duck2.pos.x += pushX;
+                    duck2.pos.y += pushY;
+    
+                    // Reflect velocities to separate ducks
+                    let tempVelX = duck1.vel.x;
+                    let tempVelY = duck1.vel.y;
+                    duck1.vel.x = duck2.vel.x;
+                    duck1.vel.y = duck2.vel.y;
+                    duck2.vel.x = tempVelX;
+                    duck2.vel.y = tempVelY;
+                }
+            }
         }
     }
+    
+    
 
     isCleared() {
         // Return true if no ducks or pucks are left
