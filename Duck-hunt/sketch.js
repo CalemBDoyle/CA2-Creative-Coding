@@ -146,6 +146,7 @@ function nextLevel() {
 }
 
 function resetGame() {
+  airFields = [];
   airFields.push(new Airfield({
     width: screenWidth,
     height: screenHeight * 0.75,
@@ -199,9 +200,9 @@ function resetGame() {
     numAirfields: airFields.length
   }));
 
-  scoreboard = []; // Reset scoreboard
-
-
   menu = new Menu(); // Recreate the menu
+  gameFinished = false; // Reset gameFinished flag
+  currentAirfieldIndex = 0; // Reset airfield index
+
   loop(); // Restart the game loop
 }

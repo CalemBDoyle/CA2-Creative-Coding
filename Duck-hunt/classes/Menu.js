@@ -1,5 +1,5 @@
 class Menu {
-    constructor(obj) {
+    constructor() {
         this.width = 300;
         this.height = 150;
         this.posX = screenWidth / 2 - this.width / 2;
@@ -20,7 +20,6 @@ class Menu {
 
         // Text on the button
         fill(255);
-    
         textSize(24);
         textAlign(CENTER, CENTER);
         text("Play Again", this.posX + this.width / 2, this.posY + this.height / 2);

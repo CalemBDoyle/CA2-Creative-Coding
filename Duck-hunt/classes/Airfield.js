@@ -83,17 +83,6 @@ class Airfield {
             duck.vel.y *= -1; // Reverse y velocity
         }
     }
-    checkCollision(duck1, duck2) {
-        let dx = duck1.pos.x - duck2.pos.x;
-        let dy = duck1.pos.y - duck2.pos.y;
-        let distance = Math.sqrt(dx * dx + dy * dy);
-        console.log("collisionDetected")
-
-        // If distance between the centers is less than the sum of their radii, they are colliding
-        return distance < (duck1.width / 2 + duck2.width / 2);
-        
-    }
-
 
     isCleared() {
         // Return true if no ducks or pucks are left
